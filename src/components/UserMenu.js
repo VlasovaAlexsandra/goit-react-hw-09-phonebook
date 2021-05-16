@@ -1,4 +1,5 @@
-import { connect } from 'react-redux';
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { authSelectors, authOperations } from '../redux/Auth/index'
 import Button from '@material-ui/core/Button';
 
@@ -17,27 +18,33 @@ const styles = {
     }
 }
 
-const UserMenu = ({ avatar, name, onLogout }) => (
-    <div style={styles.container}>
-        <img src={avatar} alt="" width="32" style={styles.avatar} />
-        <span style={styles.name}> Welcome, {name}</span>
-        <Button
-            variant="contained"
-            color="primary"
-            type="button"
-            onClick={onLogout}>
-            Logout
+export default function UserMenu() {
+
+    const dispatch = useDispatch()
+
+    const name = useSelector(authSelectors.getUsername)
+
+    const onLogOut = useCallback(() => {
+        dispatch(authOperations.logOut())
+    }, [dispatch])
+
+    return (
+        <div style={styles.container}>
+            <img src="#" alt="" width="32" style={styles.avatar} />
+            <span style={styles.name}> Welcome, {name}</span>
+            <Button
+                variant="contained"
+                color="primary"
+                type="button"
+                onClick={onLogOut}>
+                Logout
         </Button>
-    </div>
+        </div>
 
-)
-
-const mapStateToProps = (state) => ({
-    name: authSelectors.getUsername(state)
-})
-
-const mapDispatchToProps = {
-    onLogout: authOperations.logOut
+    )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu)
+
+
+
+

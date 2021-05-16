@@ -1,7 +1,8 @@
 {
-  "name": "goit-react-hw-08-phonebook",
+  "name": "goit-react-hw-09-phonebook",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://VlasovaAlexsandra.github.io/goit-react-hw-09-phonebook",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.5.1",

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../redux/Auth/index';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -15,17 +15,23 @@ const styles = {
     },
 };
 
-class LoginView extends Component {
-    state = {
-        email: '',
-        password: '',
-    };
+// const mapDispatchToProps = {
+//     onLogin: authOperations.logIn,
+// };
 
-    handleChange = ({ target: { name, value } }) => {
+export default function LoginView() {
+    // state = {
+    //     email: '',
+    //     password: '',
+    // };
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const handleChange = ({ target: { name, value } }) => {
         this.setState({ [name]: value });
     };
 
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
 
         this.props.onLogin(this.state);
@@ -33,55 +39,59 @@ class LoginView extends Component {
         this.setState({ name: '', email: '', password: '' });
     };
 
-    render() {
-        const { email, password } = this.state;
 
-        return (
-            <div>
-                <CardActionArea>
-                    <h1>Страница логина</h1>
+    // const { email, password } = this.state;
 
-                    <form
-                        onSubmit={this.handleSubmit}
-                        style={styles.form}
-                        autoComplete="off"
-                    >
-                        <label style={styles.label}>
-                            Почта
+    return (
+
+
+
+        <div>
+            <CardActionArea>
+                <h1>Страница логина</h1>
+
+                <form
+                    onSubmit={this.handleSubmit}
+                    style={styles.form}
+                    autoComplete="off"
+                >
+                    <label style={styles.label}>
+                        Почта
             <input
-                                type="email"
-                                name="email"
-                                value={email}
-                                onChange={this.handleChange}
-                            />
-                        </label>
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={this.handleChange}
+                        />
+                    </label>
 
-                        <label style={styles.label}>
-                            Пароль
+                    <label style={styles.label}>
+                        Пароль
             <input
-                                type="password"
-                                name="password"
-                                value={password}
-                                onChange={this.handleChange}
-                            />
-                        </label>
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={this.handleChange}
+                        />
+                    </label>
 
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit">
-                            Войти
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit">
+                        Войти
                         </Button>
 
-                    </form>
-                </CardActionArea>
-            </div>
-        );
-    }
+                </form>
+            </CardActionArea>
+        </div >
+    )
+
 }
 
-const mapDispatchToProps = {
-    onLogin: authOperations.logIn,
-};
 
-export default connect(null, mapDispatchToProps)(LoginView)
+
+
+
+
+//  connect(null, mapDispatchToProps)(LoginView)
