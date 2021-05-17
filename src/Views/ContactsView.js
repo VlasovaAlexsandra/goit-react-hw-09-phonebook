@@ -6,14 +6,6 @@ import ContactList from '../components/Form/ContactList/ContactList';
 import Filter from '../components/Form/Filter/Filter';
 import { contactsOperations } from '../redux/Contacts/index';
 
-// const mapDispatchToProps = dispatch => ({
-//     fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-// });
-
-// componentDidMount() {
-//     this.props.fetchContacts();
-// }
-
 export default function ContactsView() {
     const dispatch = useDispatch()
     useEffect(() => {

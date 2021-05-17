@@ -26,12 +26,12 @@ export default function ContactForm() {
     const contacts = useSelector(contactsSelectors.getAllContacts)
     useEffect(() => {
         dispatch(contactsOperations.fetchContacts())
-
     }, [dispatch])
 
     const hendelChangeName = useCallback(e => {
         setName(e.currentTarget.value)
     }, []);
+    
     const hendelChangeNumber = useCallback(e => {
         setNumber(e.currentTarget.value)
     }, []);

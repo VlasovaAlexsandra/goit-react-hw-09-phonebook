@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/Auth/index';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Button from '@material-ui/core/Button';
@@ -15,43 +15,36 @@ const styles = {
     },
 };
 
-// const mapDispatchToProps = {
-//     onLogin: authOperations.logIn,
-// };
-
 export default function LoginView() {
-    // state = {
-    //     email: '',
-    //     password: '',
-    // };
+
     const dispatch = useDispatch();
+
     const [email, setEmail] = useState('');
+
     const [password, setPassword] = useState('');
-    const handleChange = ({ target: { name, value } }) => {
-        this.setState({ [name]: value });
-    };
+
+    const handleChangeEmail = evt => {
+        setEmail(evt.target.value)
+    }
+
+    const handleChangePassword = evt => {
+        setPassword(evt.target.value)
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        this.props.onLogin(this.state);
-
-        this.setState({ name: '', email: '', password: '' });
+        dispatch(authOperations.logIn({email, password}))
+        setEmail('')
+        setPassword('')
     };
 
-
-    // const { email, password } = this.state;
-
     return (
-
-
-
         <div>
             <CardActionArea>
                 <h1>Страница логина</h1>
 
                 <form
-                    onSubmit={this.handleSubmit}
+                    onSubmit={handleSubmit}
                     style={styles.form}
                     autoComplete="off"
                 >
@@ -61,7 +54,7 @@ export default function LoginView() {
                             type="email"
                             name="email"
                             value={email}
-                            onChange={this.handleChange}
+                            onChange={handleChangeEmail}
                         />
                     </label>
 
@@ -71,7 +64,7 @@ export default function LoginView() {
                             type="password"
                             name="password"
                             value={password}
-                            onChange={this.handleChange}
+                            onChange={handleChangePassword}
                         />
                     </label>
 
@@ -88,10 +81,3 @@ export default function LoginView() {
     )
 
 }
-
-
-
-
-
-
-//  connect(null, mapDispatchToProps)(LoginView)

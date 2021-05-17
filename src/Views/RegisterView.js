@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/Auth/index'
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Button from '@material-ui/core/Button';
@@ -15,27 +15,35 @@ const styles = {
     },
 };
 
-class RegisterView extends Component {
-    state = {
-        name: '',
-        email: '',
-        password: '',
-    };
+export default function RegisterView() {
 
-    handleChange = ({ target: { name, value } }) => {
-        this.setState({ [name]: value });
-    };
+    const dispatch = useDispatch();
 
-    handleSubmit = e => {
+    const [name, setName] = useState('');
+
+    const [email, setEmail] = useState('');
+
+    const [password, setPassword] = useState('');
+
+     const handleChangeName = evt => {
+        setName(evt.target.value)
+    }
+
+     const handleChangeEmail = evt => {
+        setEmail(evt.target.value)
+    }
+
+    const handleChangePassword = evt => {
+        setPassword(evt.target.value)
+    }
+    
+      const handleSubmit = e => {
         e.preventDefault();
-
-        this.props.onRegister(this.state);
-
-        this.setState({ name: '', email: '', password: '' });
+        dispatch(authOperations.register({name, email, password}))
+        setName('')
+        setEmail('')
+        setPassword('')
     };
-
-    render() {
-        const { name, email, password } = this.state;
 
         return (
             <div>
@@ -43,7 +51,7 @@ class RegisterView extends Component {
                     <h1>Страница регистрации</h1>
 
                     <form
-                        onSubmit={this.handleSubmit}
+                        onSubmit={handleSubmit}
                         style={styles.form}
                         autoComplete="off"
                     >
@@ -53,7 +61,7 @@ class RegisterView extends Component {
                                 type="text"
                                 name="name"
                                 value={name}
-                                onChange={this.handleChange}
+                                onChange={handleChangeName}
                             />
                         </label>
 
@@ -63,7 +71,7 @@ class RegisterView extends Component {
                                 type="email"
                                 name="email"
                                 value={email}
-                                onChange={this.handleChange}
+                                onChange={handleChangeEmail}
                             />
                         </label>
 
@@ -73,7 +81,7 @@ class RegisterView extends Component {
                                 type="password"
                                 name="password"
                                 value={password}
-                                onChange={this.handleChange}
+                                onChange={handleChangePassword}
                             />
                         </label>
 
@@ -88,10 +96,6 @@ class RegisterView extends Component {
             </div>
         );
     }
-}
 
-const mapDispatchToProps = {
-    onRegister: authOperations.register,
-};
 
-export default connect(null, mapDispatchToProps)(RegisterView)
+
